@@ -14,7 +14,7 @@ func MapKeyToCamelCase(m map[string]interface{}) map[string]interface{} {
         nk = nk + strings.Title(kp)
       }
     }
-    m[nk] = m[k]
+    m[nk] = v
     delete(m, k)
   }
   return m
