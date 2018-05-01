@@ -38,15 +38,16 @@ func MapKeyToCamelCase(m map[string]interface{}, d string) map[string]interface{
 	return m
 }
 
-func Contains(s []interface{}, v interface{}) bool {
+func Contains(s interface{}, v interface{}) bool {
+	sSlice := s.([]interface{})
 	vBytes, err := getBytes(v)
 	if err != nil {
 		return false
 	}
 	vMd5Bytes := md5.Sum(vBytes)
 	vString := hex.EncodeToString(vMd5Bytes[:])
-	set := make(map[string]struct{}, len(s))
-	for _, e := range s {
+	set := make(map[string]struct{}, len(sSlice))
+	for _, e := range sSlice {
 		eBytes, err := getBytes(e)
 		if err != nil {
 			continue
