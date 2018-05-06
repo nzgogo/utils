@@ -68,7 +68,6 @@ func ShortID(s string) (string, error) {
 	var inputInt []int64
 
 	for i := 0; i < len(s); i = i + 4 {
-		fmt.Println(string(inputSlice[i : i+4]))
 		n, _ := strconv.ParseInt(string(inputSlice[i:i+4]), 16, 64)
 		inputInt = append(inputInt, n)
 	}
@@ -80,6 +79,7 @@ func ShortID(s string) (string, error) {
 	table := "23456789ABCDEFGHJKLMNPQRSTUVWXYZ"
 
 	var result string
+
 	for i := len(inputInt) - 1; i >= 0; i-- {
 		result = result + fmt.Sprintf("%c", table[inputInt[i]])
 	}
@@ -88,7 +88,7 @@ func ShortID(s string) (string, error) {
 }
 
 func remainder(n int64) int64 {
-	if n <= 32 {
+	if n < 32 {
 		return n
 	}
 	var totalRemainder int64
