@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"encoding/hex"
 	"fmt"
 	"strconv"
 )
@@ -56,7 +57,9 @@ func ContainsString(s []string, v string) bool {
 }
 
 func ShortID(s string) (string, error) {
-	if _, err := strconv.ParseInt(s, 16, 64); err != nil {
+	src := []byte(s)
+	dst := make([]byte, hex.DecodedLen(len(src)))
+	if _, err := hex.Decode(dst, src); err != nil {
 		return "", err
 	}
 
