@@ -1,6 +1,9 @@
 package types
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 func Int(v int64) *int64 {
 	return &v
@@ -15,7 +18,8 @@ func Bool(v bool) *bool {
 }
 
 func String(v string) *string {
-	return &v
+	sv := fmt.Sprintf("%v", v)
+	return &sv
 }
 
 func Time(v time.Time) *time.Time {
