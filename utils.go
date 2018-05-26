@@ -1,40 +1,9 @@
 package utils
 
 import (
-	"encoding/hex"
 	"fmt"
 	"strconv"
 )
-
-// func MapKeyToCamelCase(m map[string]interface{}, d string) map[string]interface{} {
-// 	for k, v := range m {
-// 		nk := ""
-// 		s := strings.Split(k, d)
-// 		if len(s) > 1 {
-// 			var r []string
-// 			for _, v := range s {
-// 				if v != "" {
-// 					r = append(r, v)
-// 				}
-// 			}
-// 			for i, kp := range s {
-// 				kp = strings.ToLower(kp)
-// 				if i == 0 {
-// 					nk = nk + kp
-// 				} else {
-// 					nk = nk + strings.Title(kp)
-// 				}
-// 			}
-// 		} else {
-// 			nk = k
-// 		}
-// 		m[nk] = v
-// 		if len(s) > 1 {
-// 			delete(m, k)
-// 		}
-// 	}
-// 	return m
-// }
 
 func MapKeySwap(m map[string]interface{}, n map[string]string) map[string]interface{} {
 	r := make(map[string]interface{})
@@ -57,12 +26,6 @@ func ContainsString(s []string, v string) bool {
 }
 
 func ShortID(s string) (string, error) {
-	src := []byte(s)
-	dst := make([]byte, hex.DecodedLen(len(src)))
-	if _, err := hex.Decode(dst, src); err != nil {
-		return "", err
-	}
-
 	inputSlice := []rune(s)
 
 	var inputInt []int64
@@ -98,3 +61,17 @@ func remainder(n int64) int64 {
 	}
 	return remainder(totalRemainder)
 }
+
+// func AppendUnique(slice []interface{}, elems ...interface{}) ([]interface{}, error) {
+// 	for _, v := range elems {
+// 		et := reflect.SliceOf(reflect.TypeOf(v))
+// 		st := reflect.TypeOf(slice)
+// 		if et != st {
+// 			return nil, errors.New("type mismatch")
+// 		}
+// 	}
+//
+// 	set := make(map[interface{}]struct{})
+//
+// 	return nil, nil
+// }
