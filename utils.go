@@ -1,8 +1,8 @@
 package utils
 
 import (
+	"encoding/json"
 	"fmt"
-	"micro/codec"
 	"strconv"
 )
 
@@ -72,13 +72,13 @@ func FormatAddress(v interface{}) (string, error) {
 		City         string `json:"city"`
 		Zip          string `json:"zip"`
 	}
-	b, err := codec.Marshal(v)
+	b, err := json.Marshal(v)
 	if err != nil {
 		return "", err
 	}
 
 	a := Address{}
-	if err := codec.Unmarshal(b, &a); err != nil {
+	if err := json.Unmarshal(b, &a); err != nil {
 		return "", err
 	}
 
