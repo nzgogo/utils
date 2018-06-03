@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"micro/codec"
 	"strconv"
 )
 
@@ -61,6 +62,71 @@ func remainder(n int64) int64 {
 	}
 	return remainder(totalRemainder)
 }
+
+func FormatAddress(v interface{}) (string, error) {
+	type Address struct {
+		UnitNumber   string `json:"unitNumber"`
+		StreetNumber string `json:"streetNumber"`
+		Street       string `json:"street"`
+		District     string `json:"district"`
+		City         string `json:"city"`
+		Zip          string `json:"zip"`
+	}
+	b, err := codec.Marshal(v)
+	if err != nil {
+		return "", err
+	}
+
+	a := Address{}
+	if err := codec.Unmarshal(b, &a); err != nil {
+		return "", err
+	}
+
+	f := a.StreetNumber + " " + a.Street + ", " + a.District + ", " + a.City + " " + a.Zip
+
+	if a.UnitNumber != "" {
+		f = a.UnitNumber + "/" + f
+	}
+
+	return f, nil
+}
+
+// func Distinct(arr interface{}) (reflect.Value, bool) {
+// 	// create a slice from our input interface
+// 	slice, ok := takeArg(arr, reflect.Slice)
+// 	if !ok {
+// 		return reflect.Value{}, ok
+// 	}
+//
+// 	// put the values of our slice into a map
+// 	// the key's of the map will be the slice's unique values
+// 	c := slice.Len()
+// 	m := make(map[interface{}]bool)
+// 	for i := 0; i < c; i++ {
+// 		m[slice.Index(i).Interface()] = true
+// 	}
+// 	mapLen := len(m)
+//
+// 	// create the output slice and populate it with the map's keys
+// 	out := reflect.MakeSlice(reflect.TypeOf(arr), mapLen, mapLen)
+// 	i := 0
+// 	for k := range m {
+// 		v := reflect.ValueOf(k)
+// 		o := out.Index(i)
+// 		o.Set(v)
+// 		i++
+// 	}
+//
+// 	return out, ok
+// }
+//
+// func takeArg(arg interface{}, kind reflect.Kind) (val reflect.Value, ok bool) {
+// 	val = reflect.ValueOf(arg)
+// 	if val.Kind() == kind {
+// 		ok = true
+// 	}
+// 	return
+// }
 
 // func AppendUnique(slice []interface{}, elems ...interface{}) ([]interface{}, error) {
 // 	for _, v := range elems {
