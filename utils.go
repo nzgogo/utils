@@ -3,7 +3,9 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
+	"reflect"
 	"strconv"
+	"utils/price"
 )
 
 func MapKeySwap(m map[string]interface{}, n map[string]string) map[string]interface{} {
@@ -89,6 +91,38 @@ func FormatAddress(v interface{}) (string, error) {
 	}
 
 	return f, nil
+}
+
+func ReplacePrice(m map[string]interface{}, keys []string) map[string]interface{} {
+	keysToBeReplaced := make(map[string]struct{})
+	for _, v := range keys {
+		keysToBeReplaced[v] = struct{}{}
+	}
+
+	for k, v := range m {
+		if _, ok := keysToBeReplaced[k]; ok {
+			m[k], _ = price.WholeToDecimal(v)
+			continue
+		}
+		iv := reflect.ValueOf(v)
+		if iv.IsValid() {
+			switch iv.Kind() {
+			case reflect.Array, reflect.Slice:
+				ns := make([]interface{}, 0)
+				s, _ := v.([]interface{})
+				for _, v := range s {
+					om := v.(map[string]interface{})
+					ns = append(ns, ReplacePrice(om, keys))
+				}
+				m[k] = ns
+			case reflect.Map:
+				nm, _ := v.(map[string]interface{})
+				m[k] = ReplacePrice(nm, keys)
+			}
+		}
+	}
+
+	return m
 }
 
 // func Distinct(arr interface{}) (reflect.Value, bool) {
