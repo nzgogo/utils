@@ -18,3 +18,17 @@ func Log(from, message string) {
 	m := &chat.Message{Text: slack_msg, Attachments: attachments}
 	m.Send(slackChannel)
 }
+
+// more customized slack message for debugging purpose
+func CustomizedLog(from, title, message, slackurl string) {
+	var slackChannel = webhook.New(slackurl)
+	attachments := make([]*chat.Attachment, 1)
+	attachments = append(attachments, &chat.Attachment{
+		Title: title,
+		Color: "#FF2D00",
+		Text:  message,
+	})
+	slack_msg := "*Message from 👉* \n> " + from
+	m := &chat.Message{Text: slack_msg, Attachments: attachments}
+	m.Send(slackChannel)
+}
