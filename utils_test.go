@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"testing"
 	"nzgogo/micro/codec"
+	"testing"
 	"time"
 )
 
@@ -12,7 +12,7 @@ type Product struct {
 
 func TestReplacePrice(t *testing.T) {
 	price := int64(29999)
-	product := Product{PriceFixed:&price}
+	product := Product{PriceFixed: &price}
 
 	result := make(map[string]interface{})
 	productBytes, err := codec.Marshal(product)
@@ -41,24 +41,24 @@ func TestFirstDayOfISOWeek(t *testing.T) {
 	layout := "2006-01-02 15:04:05"
 
 	// current week
-	begin := FirstDayOfISOWeek(year,week,time.Local)
+	begin := FirstDayOfISOWeek(year, week, time.Local)
 	expect, err := time.ParseInLocation(layout, "2018-07-30 00:00:00.000", loc)
 	if err != nil {
 		t.Error(err.Error())
 	}
 	if !expect.Equal(begin) {
 		t.Error("expected", expect,
-			"got", begin,)
+			"got", begin)
 	}
 
 	// get the starting time of the 1st week of 1985:
-	begin = FirstDayOfISOWeek(1985,1,time.Local)
+	begin = FirstDayOfISOWeek(1985, 1, time.Local)
 	expect, err = time.ParseInLocation(layout, "1984-12-31 00:00:00.000", loc)
 	if err != nil {
 		t.Error(err.Error())
 	}
 	if !expect.Equal(begin) {
 		t.Error("expected", expect,
-			"got", begin,)
+			"got", begin)
 	}
 }
