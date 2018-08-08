@@ -103,7 +103,11 @@ func ReplacePrice(m map[string]interface{}, keys []string) map[string]interface{
 
 	for k, v := range m {
 		if _, ok := keysToBeReplaced[k]; ok {
-			m[k], _ = price.WholeToDecimal(fmt.Sprintf("%v", v))
+			if _, ok := v.(float64); ok {
+				m[k], _ = price.WholeToDecimal(fmt.Sprintf("%.0f", v))
+			}else {
+				m[k], _ = price.WholeToDecimal(fmt.Sprintf("%v", v))
+			}
 			continue
 		}
 		iv := reflect.ValueOf(v)

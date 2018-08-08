@@ -21,8 +21,7 @@ func TestReplacePrice(t *testing.T) {
 	}
 	//result["priceFixed"] = int64(299990000)
 	//fmt.Println(reflect.TypeOf(result["priceFixed"]))
-	//fmt.Println(fmt.Sprintf("%d", result["priceFixed"]))
-
+	//fmt.Println(fmt.Sprintf("%.0f", result["priceFixed"]))
 	ReplacePrice(result, []string{
 		"priceFixed",
 	})
@@ -36,24 +35,24 @@ func TestReplacePrice(t *testing.T) {
 }
 
 func TestFirstDayOfISOWeek(t *testing.T) {
-	year, week := time.Now().ISOWeek()
+//	year, week := time.Now().ISOWeek()
 	loc, _ := time.LoadLocation("Pacific/Auckland")
 	layout := "2006-01-02 15:04:05"
 
 	// current week
-	begin := FirstDayOfISOWeek(year, week, time.Local)
-	expect, err := time.ParseInLocation(layout, "2018-07-30 00:00:00.000", loc)
-	if err != nil {
-		t.Error(err.Error())
-	}
-	if !expect.Equal(begin) {
-		t.Error("expected", expect,
-			"got", begin)
-	}
+	//begin := FirstDayOfISOWeek(year, week, time.Local)
+	//expect, err := time.ParseInLocation(layout, "2018-07-30 00:00:00.000", loc)
+	//if err != nil {
+	//	t.Error(err.Error())
+	//}
+	//if !expect.Equal(begin) {
+	//	t.Error("expected", expect,
+	//		"got", begin)
+	//}
 
 	// get the starting time of the 1st week of 1985:
-	begin = FirstDayOfISOWeek(1985, 1, time.Local)
-	expect, err = time.ParseInLocation(layout, "1984-12-31 00:00:00.000", loc)
+	begin := FirstDayOfISOWeek(1985, 1, time.Local)
+	expect, err := time.ParseInLocation(layout, "1984-12-31 00:00:00.000", loc)
 	if err != nil {
 		t.Error(err.Error())
 	}
