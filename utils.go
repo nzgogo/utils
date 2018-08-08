@@ -8,6 +8,7 @@ import (
 
 	"github.com/nzgogo/utils/price"
 	"time"
+	"math"
 )
 
 func MapKeySwap(m map[string]interface{}, n map[string]string) map[string]interface{} {
@@ -213,4 +214,30 @@ func FirstDayOfISOWeek(year int, week int, timezone *time.Location) time.Time {
 	}
 
 	return date
+}
+
+func CalculateFeeFromDistance(distance int64) (fee int64) {
+	fee = 499
+	if distance > 1000 && distance <= 4500 {
+		fee += int64(math.Ceil((float64(distance)-1000)/500) * 75)
+	}
+	if distance > 4500 && distance <= 9500 {
+		fee += int64(math.Ceil((float64(distance)-1000)/500) * 90)
+	}
+	if distance > 9500 && distance <= 14500 {
+		fee += int64(math.Ceil((float64(distance)-1000)/500) * 115)
+	}
+	if distance > 14500 {
+		fee += int64(math.Ceil((float64(distance)-1000)/500) * 125)
+	}
+	return fee
+}
+
+func CalculateDriverBenifit (distance int64) (int64, error){
+	fee := CalculateFeeFromDistance(distance)
+	rate := int64(80)
+	if distance > 2500 {
+		rate = int64(75)
+	}
+	return price.RoundHalfToEven(fee * rate / 100)
 }
