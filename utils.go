@@ -100,12 +100,11 @@ func ReplacePrice(m map[string]interface{}, keys []string) map[string]interface{
 	for _, v := range keys {
 		keysToBeReplaced[v] = struct{}{}
 	}
-
 	for k, v := range m {
 		if _, ok := keysToBeReplaced[k]; ok {
 			if _, ok := v.(float64); ok {
 				m[k], _ = price.WholeToDecimal(fmt.Sprintf("%.0f", v))
-			}else {
+			} else {
 				m[k], _ = price.WholeToDecimal(fmt.Sprintf("%v", v))
 			}
 			continue
@@ -114,16 +113,15 @@ func ReplacePrice(m map[string]interface{}, keys []string) map[string]interface{
 		if iv.IsValid() {
 			switch iv.Kind() {
 			case reflect.Array, reflect.Slice:
-				ns := make([]interface{}, 0)
-				s, _ := v.([]interface{})
+				ns := make([]map[string]interface{}, 0)
+				s, _ := v.([]map[string]interface{})
 				for _, v := range s {
 					siv := reflect.ValueOf(v)
 					if !siv.IsValid() || siv.Kind() != reflect.Map {
 						ns = s
 						break
 					}
-					om := v.(map[string]interface{})
-					ns = append(ns, ReplacePrice(om, keys))
+					ns = append(ns, ReplacePrice(v, keys))
 				}
 				m[k] = ns
 			case reflect.Map:
@@ -132,7 +130,6 @@ func ReplacePrice(m map[string]interface{}, keys []string) map[string]interface{
 			}
 		}
 	}
-
 	return m
 }
 

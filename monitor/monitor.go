@@ -1,10 +1,10 @@
 package monitor
 
 import (
-	"runtime"
-	"time"
 	"encoding/json"
 	"log"
+	"runtime"
+	"time"
 )
 
 type Monitor struct {

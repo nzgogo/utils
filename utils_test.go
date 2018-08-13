@@ -35,7 +35,7 @@ func TestReplacePrice(t *testing.T) {
 }
 
 func TestFirstDayOfISOWeek(t *testing.T) {
-//	year, week := time.Now().ISOWeek()
+	//	year, week := time.Now().ISOWeek()
 	loc, _ := time.LoadLocation("Pacific/Auckland")
 	layout := "2006-01-02 15:04:05"
 

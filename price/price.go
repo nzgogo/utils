@@ -94,7 +94,7 @@ func CalculateFeeFromDistance(distance int64) (fee int64) {
 	return fee
 }
 
-func CalculateDriverBenifit (distance int64) (int64, error){
+func CalculateDriverBenifit(distance int64) (int64, error) {
 	fee := CalculateFeeFromDistance(distance)
 	rate := int64(80)
 	if distance > 2500 {
