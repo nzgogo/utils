@@ -113,20 +113,18 @@ func ReplacePrice(m map[string]interface{}, keys []string) map[string]interface{
 		if iv.IsValid() {
 			switch iv.Kind() {
 			case reflect.Array, reflect.Slice:
-				b := true
-				ns := make([]map[string]interface{}, 0)
-				s, _ := v.([]map[string]interface{})
-				for _, vl := range s {
-					siv := reflect.ValueOf(vl)
+				ns := make([]interface{}, 0)
+				s, _ := v.([]interface{})
+				for _, v := range s {
+					siv := reflect.ValueOf(v)
 					if !siv.IsValid() || siv.Kind() != reflect.Map {
-						b = false
+						ns = s
 						break
 					}
-					ns = append(ns, ReplacePrice(vl, keys))
+					om := v.(map[string]interface{})
+					ns = append(ns, ReplacePrice(om, keys))
 				}
-				if b {
-					m[k] = ns
-				}
+				m[k] = ns
 			case reflect.Map:
 				nm, _ := v.(map[string]interface{})
 				m[k] = ReplacePrice(nm, keys)
