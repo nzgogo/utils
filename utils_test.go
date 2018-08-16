@@ -1,9 +1,10 @@
 package utils
 
 import (
-	"nzgogo/micro/codec"
 	"testing"
 	"time"
+
+	"github.com/nzgogo/micro/codec"
 )
 
 type Product struct {

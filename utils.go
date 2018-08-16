@@ -1,13 +1,14 @@
 package utils
 
 import (
+	"crypto/md5"
 	"encoding/json"
 	"fmt"
 	"reflect"
 	"strconv"
+	"time"
 
 	"github.com/nzgogo/utils/price"
-	"time"
 )
 
 func MapKeySwap(m map[string]interface{}, n map[string]string) map[string]interface{} {
@@ -31,7 +32,8 @@ func ContainsString(s []string, v string) bool {
 }
 
 func ShortID(s string) (string, error) {
-	inputSlice := []rune(s)
+	sMd5 := md5.Sum([]byte(s))
+	inputSlice := []rune(fmt.Sprintf("%x", sMd5)[0:24])
 
 	var inputInt []int64
 
