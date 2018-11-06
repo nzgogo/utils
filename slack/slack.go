@@ -5,7 +5,7 @@ import (
 	"github.com/multiplay/go-slack/webhook"
 )
 
-// deprecated, user CustomizedLog instead 
+// deprecated, use CustomizedLog instead 
 func Log(from, message string) {
 	slackurl := "https://hooks.slack.com/services/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"
 	var slackChannel = webhook.New(slackurl)
