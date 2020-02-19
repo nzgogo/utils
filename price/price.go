@@ -97,8 +97,11 @@ func CalculateFeeFromDistance(distance int64) (fee int64) {
 func CalculateDriverBenifit(distance int64) (int64, error) {
 	fee := CalculateFeeFromDistance(distance)
 	rate := int64(80)
-	if distance > 2500 {
-		rate = int64(75)
+	if distance >= 3000 && distance < 10000 {
+		rate = int64(70)
+	}
+	if distance >= 10000 {
+		rate = int64(65)
 	}
 	return RoundHalfToEven(fee * rate / 100)
 }
